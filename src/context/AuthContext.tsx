@@ -44,7 +44,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const { password: _, ...userWithoutPassword } = foundUser;
-      setUser(userWithoutPassword);
+      
+      // Ensure the role is either 'user' or 'admin'
+      if (userWithoutPassword.role !== 'user' && userWithoutPassword.role !== 'admin') {
+        userWithoutPassword.role = 'user'; // Default to 'user' if invalid role
+      }
+      
+      setUser(userWithoutPassword as User);
       localStorage.setItem('user', JSON.stringify(userWithoutPassword));
       toast({
         title: "Success",
@@ -73,7 +79,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         name,
         email,
         password,
-        role: 'user',
+        role: 'user' as const, // Explicitly set as 'user' with const assertion
       };
 
       mockUsers.push(newUser);

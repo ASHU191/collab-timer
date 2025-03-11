@@ -16,6 +16,11 @@ const Login = () => {
     await login(email, password);
   };
 
+  const handleAdminLogin = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    await login('admin@gmail.com', '123');
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-secondary to-background p-4">
       <Card className="w-full max-w-md shadow-lg animate-fadeIn">
@@ -55,9 +60,19 @@ const Login = () => {
                 className="w-full"
               />
             </div>
-            <Button type="submit" className="w-full">
-              Sign In
-            </Button>
+            <div className="flex gap-2">
+              <Button type="submit" className="flex-1">
+                Sign In
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline"
+                onClick={handleAdminLogin}
+                className="flex-1"
+              >
+                Admin Login
+              </Button>
+            </div>
           </form>
         </CardContent>
         <CardFooter className="justify-center">
